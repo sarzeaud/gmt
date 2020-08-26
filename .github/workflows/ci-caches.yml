@@ -1,0 +1,68 @@
+# Gets and uploads the GMT data artifacts for building GMT documentation and running tests
+name: Cache GMT data
+
+on:
+  # push:
+  # Uncomment the 'pull_request' line below to manually re-cache data artifacts in PR
+  # pull_request:
+  # Schedule runs on 12 noon every Sunday
+  schedule:
+    - cron: '0 12 * * 0'
+
+jobs:
+  gmt_cache:
+    name: Cache GMT artifacts
+    runs-on: macOS-latest
+
+    steps:
+      # Setup Miniconda
+      - name: Setup Miniconda
+        uses: goanpeca/setup-miniconda@v1.7.0
+        with:
+          channels: conda-forge
+
+      # Install GMT
+      - name: Install GMT
+        shell: bash -l {0}
+        run: conda install -c conda-forge gmt
+
+      # Download remote files
+      - name: Download remote data
+        shell: bash -l {0}
+        run: |
+            # list of datasets used in tests
+            data="@earth_relief_01d \
+                  @earth_relief_30m \
+                  @earth_relief_20m \
+                  @earth_relief_15m \
+                  @earth_relief_10m @earth_relief_10m_g \
+                  @earth_relief_06m \
+                  @earth_relief_05m @earth_relief_05m_g \
+                  @earth_relief_04m \
+                  @earth_relief_02m
+                  @earth_relief_01m \
+                  @earth_day_01d \
+                  @earth_day_20m \
+                  @earth_night_20m \
+                  @earth_age_06m \
+                  @earth_mask_05m"
+            # Download remote data and cache files
+            # download remote data multiple times to make sure all are downloaded
+            gmt which -Ga $data
+            gmt which -Ga $data
+            gmt which -Ga $data
+            gmt get -Dcache
+            # Download extra tiles for tests
+            # test/grdimage/rounding.sh
+            gmt grdcut -R3:57/4:18/44:00/44:15 @earth_relief_03s -G/dev/null
+            # doc/example/anim02
+            gmt grdcut @earth_relief_30s -R-108/-103/35/40 -G/dev/null
+
+      # Upload the downloaded files as artifacts to Github
+      - name: Upload artifacts to Github
+        uses: actions/upload-artifact@v2
+        with:
+          name: gmt-cache
+          path: |
+              ~/.gmt/cache
+              ~/.gmt/server
