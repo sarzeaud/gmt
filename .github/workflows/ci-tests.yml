@@ -124,6 +124,7 @@ jobs:
           vcpkgGitCommitId: 0bf3923f9fab4001c00f0f429682a0853b5749e0
         if: runner.os == 'Windows'
       - name: Install GMT dependencies (Windows)
+        shell: bash
         run: |
           echo 'set (VCPKG_BUILD_TYPE release)' >> ${VCPKG_ROOT}/triplets/x64-windows.cmake
           cat ${VCPKG_ROOT}/triplets/x64-windows.cmake
