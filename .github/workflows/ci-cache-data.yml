@@ -18,7 +18,7 @@ jobs:
     steps:
       # Setup Miniconda
       - name: Setup Miniconda
-        uses: conda-incubator/setup-miniconda@2.0.1
+        uses: conda-incubator/setup-miniconda@v2.0.1
         with:
           channels: conda-forge
 
