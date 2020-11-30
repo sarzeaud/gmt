@@ -100,6 +100,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      # Restore from cache the previously built ports. If cache-miss, download and build vcpkg (aka "bootstrap vcpkg").
+      - name: Setup vcpkg (Windows)
+        uses: lukka/run-vcpkg@v6
+        with:
+          vcpkgGitCommitId: 0bf3923f9fab4001c00f0f429682a0853b5749e0  # v2020.11
+          vcpkgArguments: netcdf-c gdal pcre2 fftw3[core,threads] clapack openblas
+          vcpkgTriplet: x64-windows
+        if: runner.os == 'Windows'
+
       - name: Install GMT dependencies
         run: |
           # $RUNNER_OS can be Linux, macOS or Windows
@@ -112,24 +121,6 @@ jobs:
           BUILD_DOCS: ${{ matrix.BUILD_DOCS }}
           PACKAGE: ${{ matrix.PACKAGE }}
           EXCLUDE_OPTIONAL : ${{ matrix.EXCLUDE_OPTIONAL }}
-        if: runner.os != 'Windows'
-
-      # Restore from cache the previously built ports. If cache-miss, download and build vcpkg (aka "bootstrap vcpkg").
-      - name: Install vcpkg (Windows)
-        uses: lukka/run-vcpkg@v6
-        with:
-          # Just install vcpkg for now, do not install any ports in this step yet.
-          setupOnly: true
-          # v2020.11
-          vcpkgGitCommitId: 0bf3923f9fab4001c00f0f429682a0853b5749e0
-        if: runner.os == 'Windows'
-      - name: Install GMT dependencies (Windows)
-        shell: bash
-        run: |
-          echo 'set (VCPKG_BUILD_TYPE release)' >> ${VCPKG_ROOT}/triplets/x64-windows.cmake
-          cat ${VCPKG_ROOT}/triplets/x64-windows.cmake
-          $VCPKG_ROOT/vcpkg install netcdf-c gdal pcre2 fftw3[core,threads] clapack openblas --triplet x64-windows
-        if: runner.os == 'Windows'
 
       - name: Add Sphinx to PATH
         run: echo "$(python3 -m site --user-base)/bin" >> $GITHUB_PATH
