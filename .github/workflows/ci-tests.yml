@@ -104,9 +104,8 @@ jobs:
       - name: Setup vcpkg (Windows)
         uses: lukka/run-vcpkg@v6
         with:
+          setupOnly: true
           vcpkgGitCommitId: 0bf3923f9fab4001c00f0f429682a0853b5749e0  # v2020.11
-          vcpkgArguments: netcdf-c gdal pcre2 fftw3[core,threads] clapack openblas
-          vcpkgTriplet: x64-windows
         if: runner.os == 'Windows'
 
       - name: Install GMT dependencies

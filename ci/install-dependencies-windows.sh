@@ -19,10 +19,9 @@ PACKAGE="${PACKAGE:-false}"
 # Set VCPKG_BUILD_TYPE to build release only to save half time
 echo 'set (VCPKG_BUILD_TYPE release)' >> ${VCPKG_ROOT}/triplets/x64-windows.cmake
 cat ${VCPKG_ROOT}/triplets/x64-windows.cmake
-
 # install libraries
 $VCPKG_ROOT/vcpkg install netcdf-c gdal pcre2 fftw3[core,threads] clapack openblas --triplet x64-windows
-
+# List installed packages
 vcpkg list
 
 # install more packages using chocolatey
