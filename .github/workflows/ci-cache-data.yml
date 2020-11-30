@@ -4,7 +4,7 @@ name: Cache GMT data
 on:
   # push:
   # Uncomment the 'pull_request' line below to manually re-cache data artifacts in PR
-  # pull_request:
+  pull_request:
   # Schedule runs on 12 noon every Sunday
   schedule:
     - cron: '0 12 * * 0'
@@ -17,11 +17,11 @@ jobs:
     steps:
       # Setup Miniconda
       - name: Setup Miniconda
-        uses: goanpeca/setup-miniconda@v1.7.0
+        uses: conda-incubator/setup-miniconda@2.0.1
         with:
           channels: conda-forge
 
-      # Install GMT
+      # Install GMT via conda-forge
       - name: Install GMT
         shell: bash -l {0}
         run: conda install -c conda-forge gmt
