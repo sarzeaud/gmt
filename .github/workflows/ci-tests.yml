@@ -82,6 +82,15 @@ jobs:
             PACKAGE     : false
             RUN_TESTS   : true
 
+          # Windows
+          - name: Windows - Compile only
+            os: windows-latest
+            BUILD_DOCS  : false
+            DEPLOY_DOCS : false
+            PACKAGE     : false
+            RUN_TESTS   : false
+
+
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.6.0
