@@ -120,13 +120,13 @@ jobs:
         uses: lukka/run-vcpkg@v6
         with:
           setupOnly: true
-        if: runner.os == Windows
+        if: matrix.os == windows-latest
       # Now that vcpkg is installed, it is being used to run with the desired arguments.
       - name: Install GMT dependencies (Windows)
         run: |
           $VCPKG_ROOT/vcpkg install netcdf-c gdal pcre2 fftw3[core,threads] clapack openblas --triplet x64-windows
         shell: bash
-        if: runner.os == Windows
+        if: matrix.os == windows-latest
 
       - name: Add Sphinx to PATH
         run: echo "$(python3 -m site --user-base)/bin" >> $GITHUB_PATH
