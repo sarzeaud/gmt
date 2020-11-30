@@ -93,13 +93,10 @@ jobs:
 
       - name: Install GMT dependencies
         run: |
-          if [ "$RUNNER_OS" = "Linux" ]; then
-            bash ci/install-dependencies-linux.sh
-          elif [ "$RUNNER_OS" = "macOS" ]; then
-            bash ci/install-dependencies-macos.sh
-          elif [ "$RUNNER_OS" = "Windows" ]; then
-            bash ci/install-dependencies-windows.sh
-          fi
+          # $RUNNER_OS can be Linux, macOS or Windows
+          # The following command converts $RUNNER_OS to lowercase
+          os=$(echo "$RUNNER_OS" | tr '[:upper:]' '[:lower:]')
+          bash ci/install-dependencies-${os}.sh
         shell: bash
         env:
           RUN_TESTS: ${{ matrix.RUN_TESTS }}
@@ -130,7 +127,6 @@ jobs:
 
       - name: Compile GMT
         run: |
-          set -x -e
           mkdir -p build
           cd build
           cmake -G Ninja ..
