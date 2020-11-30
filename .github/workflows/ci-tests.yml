@@ -15,12 +15,14 @@ on:
     - cron: '0 12 * * *'
 
 jobs:
-  linux:
+  tests:
     name: ${{ matrix.name }}
 
     env:
       COASTLINEDIR: ${{ github.workspace }}/coastline
       INSTALLDIR: ${{ github.workspace }}/gmt-install-dir
+      # disable auto-display of GMT plots
+      GMT_END_SHOW: off
 
     runs-on: ${{ matrix.os }}
 
@@ -86,13 +88,8 @@ jobs:
         with:
           access_token: ${{ github.token }}
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
       - name: Checkout
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2
 
       - name: Install GMT dependencies
         run: |
