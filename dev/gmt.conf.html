@@ -314,6 +314,9 @@ in CMYK but interpolates in RGB).</p>
 </dd>
 <dt id="term-COLOR_NAN"><strong>COLOR_NAN</strong></dt><dd><p>Color used for the non-defined areas of images (i.e., where z = NaN) [127.5].</p>
 </dd>
+<dt id="term-COLOR_SET"><strong>COLOR_SET</strong></dt><dd><p>Default comma-separated list of colors (or a <em>categorical</em> CPT name) for automatic,
+sequential color assignments [<em>default</em>, which is #0072BD,#D95319,#EDB120,#7E2F8E,#77AC30,#4DBEEE,#A2142F].</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="dir-parameters">
@@ -352,6 +355,8 @@ to <a class="reference internal" href="#term-FONT_ANNOT_PRIMARY"><span class="xr
 </dd>
 <dt id="term-FONT_LOGO"><strong>FONT_LOGO</strong></dt><dd><p>Font to use for text plotted as part of the GMT time logo
 [8p,Helvetica,black].</p>
+</dd>
+<dt id="term-FONT_SUBTITLE"><strong>FONT_SUBTITLE</strong></dt><dd><p>Font to use when plotting titles over graphs that involve a subtitle [18p,Helvetica,black].</p>
 </dd>
 <dt id="term-FONT_TAG"><strong>FONT_TAG</strong></dt><dd><p>Font to use for subplot panel tags such as a), ii)
 [20p,Helvetica,black].</p>
@@ -814,8 +819,10 @@ none [degree].</p>
 <dt id="term-MAP_FRAME_AXES"><strong>MAP_FRAME_AXES</strong></dt><dd><p>Sets which axes to draw and annotate. Combine any uppercase <strong>W</strong>,
 <strong>E</strong>, <strong>S</strong>, <strong>N</strong>, <strong>Z</strong> to draw and annotate west, east, south,
 north and/or vertical (perspective view only) axis. Use lower case
-to draw the axis only, but not annotate. Add an optional <strong>+</strong> to
-draw a cube of axes in perspective view. [WESN].</p>
+to draw the axis only, but not annotate.   To <em>just</em> draw an axis
+without annotation and ticks you can use the <strong>l</strong>(eft), <strong>r</strong>(ight),
+<strong>b</strong>(ottom), <strong>t</strong>(op) and (for 3-D) <strong>u</strong>(p) codes. Add an
+optional <strong>+</strong> to draw a cube of axes in perspective view. [WESN].</p>
 </dd>
 <dt id="term-MAP_FRAME_PEN"><strong>MAP_FRAME_PEN</strong></dt><dd><p>Pen attributes used to draw plain map frame [thicker,black].</p>
 </dd>
@@ -1440,7 +1447,7 @@ correspond to 1800 through 1828. [1950].</p>
         
         &copy; Copyright 2020, The GMT Team.
       <span class="lastupdated">
-        Last updated on Nov 30, 2020.
+        Last updated on Dec 17, 2020.
       </span>
 
     </p>
